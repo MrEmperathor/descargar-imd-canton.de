@@ -22,15 +22,31 @@ soup = BeautifulSoup(page.content, 'html.parser')
 #Titulo del producto
 titulo = soup.find_all('h1', class_='product--title')[0].text
 print(titulo)
+if os.path.exists(titulo):
+    print('carpeta ' + titulo + ' creada')
+else:
+    os.mkdir(titulo)
 
 #Nombre de variaciones
-vari = soup.find_all('div', class_="select-field")
+try:
 
-variantes = list()
-for i in vari:
-    variantes.append(i.text)
+    vari = soup.find_all('div', class_="select-field")[0]
 
-v = variantes[0].split('  ')
+except:
+    print('No hay Variaciones')
+    v = [titulo]
+
+if vari:
+    space = vari.text.split('  ')
+    for es in space:
+        if len(es) > 2:
+            spaceA = es.split(' ')
+
+    if len(spaceA) > 4:
+        v = [titulo]
+    else:
+        v = vari.text.split('  ')
+
 nameVariaciones = list()
 translator = Translator()
 
@@ -82,5 +98,6 @@ for nameVaria in nameVariaciones:
             print('Error al acceder a la url')
 
         vv = vv + 1
+    shutil.move(folder, titulo)
 print('proceso terminado')
 
