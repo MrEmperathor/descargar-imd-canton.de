@@ -7,6 +7,9 @@ import os
 import tinify
 import pandas as pd
 
+# path = 'C:\Users\Alberth\Documents\python archivos\py'
+
+
 keyUse = int(input('Numero key [1,2,3]: '))
 if keyUse == 1:
     tinify.key = "PTLC4X87kV6dwVmgsv3XmQ6XDPDMGpWK"
@@ -20,7 +23,7 @@ page = requests.get(urlp)
 soup = BeautifulSoup(page.content, 'html.parser')
 
 #Titulo del producto
-titulo = soup.find_all('h1', class_='product--title')[0].text
+titulo = soup.find_all('h1', class_='product--title')[0].text.strip()
 print(titulo)
 if os.path.exists(titulo):
     print('carpeta ' + titulo + ' creada')
@@ -50,6 +53,7 @@ if vari:
 nameVariaciones = list()
 translator = Translator()
 
+
 #Traduciendo variaciones
 for s in v:
     if len(s) > 2:
@@ -67,7 +71,7 @@ for cantUrl in nameVariaciones:
         i +=1
     listurl[cantUrl] = cantidadEnlaces
 
-    if os.path.exists(cantUrl):
+    if os.path.exists(titulo + cantUrl):
         print('carpeta ' + cantUrl + ' creada')
     else:
         folder = titulo + cantUrl
@@ -96,8 +100,9 @@ for nameVaria in nameVariaciones:
             shutil.move(namee, folder)
         else:
             print('Error al acceder a la url')
-
         vv = vv + 1
-    shutil.move(folder, titulo)
+    # carpetaProducto = titulo.strip()
+    # carpetaVariacion = folder.strip()
+    shutil.move(folder, name)
 print('proceso terminado')
 
