@@ -7,8 +7,6 @@ import os
 import tinify
 import pandas as pd
 
-# path = 'C:\Users\Alberth\Documents\python archivos\py'
-
 
 keyUse = int(input('Numero key [1,2,3]: '))
 if keyUse == 1:
